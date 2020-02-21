@@ -1,38 +1,91 @@
-.App {
+@import '~antd/dist/antd.css';
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  z-index: 0;
+  height: 100vh;
+}
+
+.login-page::after {
+  content: "";
+  position: fixed;
+  background-image: url('https://www.asaihotels.com/images/location/banner/en/10');
+  background-size: cover;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.2;
+  filter: blur(2px);
+  z-index: -1;
+}
+
+
+.container {
+  width: 700px;
+  margin: auto;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.login-input {
+  margin-top: 20px;
+  display: block;
+  height: 50px;
+  width: 100%;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.login-button {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  margin-top: 20px;
+  ;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+
+
+
+
+
+
+
+
+.chat-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.chat-container::after {
+  content: "";
+  position: fixed;
+  background-image: url('https://www.asaihotels.com/images/location/banner/en/10');
+  background-size: cover;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.2;
+  filter: blur(2px);
+  z-index: -1;
+}
+
+.chat-messages {
+  height: calc(100% - 50px);
+}
+
+.chat-inputbox {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: row;
+  height: 50px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chat-input {
+  height: 100%;
+  ;
 }
