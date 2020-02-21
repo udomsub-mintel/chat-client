@@ -1,26 +1,62 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Icon } from 'antd';
+import axios from 'axios';
+import randomItem from 'random-item';
+import Chat from './Chat';
 
-const LoginPage = props => {
+const ORG_ID = 'aP7ryLTthZiAXxMPazo9';
+const FIRST_NAMES = ['Jesus', 'Bill', 'Norman', 'Matilda', 'Troy', 'Lula', 'Nancy', 'Elmer', 'Eric', 'Amanda', 'Clifford'];
+const LAST_NAMES = ['Russell', 'Kelley', 'Wheeler', 'Patterson', 'Thomas', 'May', 'Roy', 'Elliott', 'Vaughn', 'Moran', 'Hunter'];
+
+const LoginPage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const createNewEngage = async () => {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 3000)
-  };
+  const [customer, setCustomer] = useState({});
+  const [chatRoomId, setChatRoomId] = useState('');
 
+  const createNewEngage = async () => {
+    try {
+      setIsLoading(true);
+      const image = require(`../data/profiles/${randomItem(['profile_5.png', 'profile_6.jpeg'])}`);
+      const body = {
+        userId: ORG_ID,
+        customerImage: image,
+        firstName: randomItem(FIRST_NAMES),
+        lastName: randomItem(LAST_NAMES),
+        birthDate: new Date(),
+        gender: randomItem(['Male', 'Female']),
+      }
+      const { data: customerId } = await axios.post('http://localhost:3000/connectx/api/customer/addCustomer', body);
+      const { data: customer } = await axios.post('http://localhost:3000/connectx/api/customer/listdataprofile', { customerId });
+      const { data: { chatRoomId } } = await axios.post('http://localhost:3000/connectx/api/engagement/chatRoom', { customerId, organizeId: ORG_ID });
+      setCustomer({ ...customer, customerId })
+      setChatRoomId(chatRoomId)
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false)
+  };
   return (
-    <div className="login-page">
-      <div className="container">
-        <img src="https://www.hoteljob.in.th/mm/9f8b2d231d36cf58903811aa08f635e220190930113721.png" alt="connectX" height="150px" />
-        <Button type="primary" className="login-button" style={{ marginTop: 40 }} onClick={createNewEngage} disabled={isLoading}>
-          {isLoading && <Icon type="loading" />}
-          <span>New engagement</span>
-          <Icon type="arrow-right" />
-        </Button>
-      </div >
+    <div>
+      {
+        chatRoomId ? <Chat customer={customer} ORG_ID={ORG_ID} chatRoomId={chatRoomId} /> : (
+          <div className="login-page">
+            <div className="container">
+              <img src="https://www.hoteljob.in.th/mm/9f8b2d231d36cf58903811aa08f635e220190930113721.png" alt="connectX" height="150px" />
+              <Button type="primary" className="login-button" style={{ marginTop: 40 }} onClick={createNewEngage} disabled={isLoading}>
+                {isLoading && <Icon type="loading" />}
+                <span>New engagement</span>
+                <Icon type="arrow-right" />
+              </Button>
+            </div >
+          </div>
+        )
+      }
     </div >
   )
+};
+
+LoginPage.defaultProps = {
+  history: () => { },
 };
 
 export default LoginPage;

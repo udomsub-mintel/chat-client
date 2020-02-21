@@ -59,6 +59,7 @@
 .chat-container {
   width: 100vw;
   height: 100vh;
+  max-width: 100vw;
 }
 
 .chat-container::after {
@@ -77,6 +78,7 @@
 
 .chat-messages {
   height: calc(100% - 50px);
+  overflow-y: scroll;
 }
 
 .chat-inputbox {
@@ -88,4 +90,25 @@
 .chat-input {
   height: 100%;
   ;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-text {
+  max-width: 50%;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding: 10px;
+  font-size: 14px;
+  background-color: rgb(237, 237, 247);
+  color: rgb(84, 92, 96);
+  border-radius: 10px;
+}
+
+.message-buttons {
+  margin-left: 16px;
+  margin-right: 16px;
 }
