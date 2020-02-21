@@ -73,8 +73,16 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
     }
   };
 
+  const getImage = (senderId) => {
+    switch (senderId) {
+      case ORG_ID: return 'https://www.hoteljob.in.th/mm/9f8b2d231d36cf58903811aa08f635e220190930113721.png';
+      case 'bot': return 'https://www.hoteljob.in.th/mm/9f8b2d231d36cf58903811aa08f635e220190930113721.png';
+      default: return customer.customerImage;
+    }
+  };
+
   const messages = chats.map((chat) => {
-    // const image = getImage(chat.senderId);
+    const image = getImage(chat.senderId);
     const isSender = chat.senderId === customer.customerId;
     const message = getMessageComponent(chat);
 
@@ -86,7 +94,7 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
       }}>
         <Avatar
           size="large"
-        // src={image}
+          src={image}
         />
         {message}
       </div>
