@@ -5,7 +5,7 @@ import randomItem from 'random-item';
 import Chat from './Chat';
 
 const ORG_ID = 'aP7ryLTthZiAXxMPazo9';
-const FIRST_NAMES = ['Jesus', 'Bill', 'Norman', 'Matilda', 'Troy', 'Lula', 'Nancy', 'Elmer', 'Eric', 'Amanda', 'Clifford'];
+const FIRST_NAMES = ['Bill', 'Norman', 'Matilda', 'Troy', 'Lula', 'Nancy', 'Elmer', 'Eric', 'Amanda', 'Clifford'];
 const LAST_NAMES = ['Russell', 'Kelley', 'Wheeler', 'Patterson', 'Thomas', 'May', 'Roy', 'Elliott', 'Vaughn', 'Moran', 'Hunter'];
 
 const LoginPage = ({ history }) => {

@@ -26,7 +26,7 @@
 
 
 .container {
-  width: 700px;
+  max-width: 700px;
   margin: auto;
   text-align: center;
 }
@@ -36,7 +36,6 @@
   display: block;
   height: 50px;
   width: 100%;
-
 }
 
 .login-button {
@@ -44,7 +43,6 @@
   height: 50px;
   border-radius: 10px;
   margin-top: 20px;
-  ;
 }
 
 
@@ -89,7 +87,7 @@
 
 .chat-input {
   height: 100%;
-  ;
+  margin-bottom: 20px;
 }
 
 .chat-messages {
