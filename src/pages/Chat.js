@@ -85,6 +85,7 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
     const image = getImage(chat.senderId);
     const isSender = chat.senderId === customer.customerId;
     const message = getMessageComponent(chat);
+    const time = new Date(chat.timestamp).toTimeString().substr(0, 5);
 
     return (
       <div key={chat.id} style={{
@@ -97,6 +98,7 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
           src={image}
         />
         {message}
+        <div style={{ marginTop: 'auto', fontSize: '12px' }}>{time}</div>
       </div>
     );
   });
