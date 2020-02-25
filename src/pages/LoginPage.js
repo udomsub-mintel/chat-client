@@ -23,6 +23,8 @@ const LoginPage = ({ history }) => {
         firstName: randomItem(FIRST_NAMES),
         lastName: randomItem(LAST_NAMES),
         birthDate: new Date(),
+        email: 'paiboon.tob@gmail.com',
+        bookingStatus: 'booked',
         gender: randomItem(['Male', 'Female']),
       }
       const { data: customerId } = await axios.post('http://localhost:3000/connectx/api/customer/addCustomer', body);
@@ -44,7 +46,7 @@ const LoginPage = ({ history }) => {
               <img src="https://www.hoteljob.in.th/mm/9f8b2d231d36cf58903811aa08f635e220190930113721.png" alt="connectX" height="150px" />
               <Button type="primary" className="login-button" style={{ marginTop: 40 }} onClick={createNewEngage} disabled={isLoading}>
                 {isLoading && <Icon type="loading" />}
-                <span>New engagement</span>
+                <span>Start Chat</span>
                 <Icon type="arrow-right" />
               </Button>
             </div >
