@@ -10,26 +10,26 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
   useEffect(() => {
     setChats([]);
     if (chatRoomId) {
-      firestore.collection('chatRoom').doc(chatRoomId).collection('chats')
+      firestore.collection(`Organizes/${ORG_ID}/chatRooms/${chatRoomId}/chats`)
         .orderBy('timestamp', 'asc')
         .onSnapshot((snapshot) => {
           const messages = [];
           snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() }));
-          console.log(messages);
           setChats([...messages]);
         });
     }
-  }, [chatRoomId]);
+  }, [ORG_ID, chatRoomId]);
 
   const handlePostMessage = async (event) => {
-    console.log(customer);
     try {
       event.preventDefault();
       const inputValue = inputText;
       setInputText('');
+
       if (inputValue) {
-        const { data } = await axios.post(`http://localhost:3000/connectx/api/engagement/message`, {
+        await axios.post(`http://localhost:3000/connectx/api/engagement/message`, {
           chatId: chatRoomId,
+          organizeId: ORG_ID,
           messageDetail: {
             senderId: customer.customerId,
             messageType: 'text',
