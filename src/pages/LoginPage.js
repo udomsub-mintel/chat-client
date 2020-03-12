@@ -18,7 +18,7 @@ const LoginPage = ({ history }) => {
       setIsLoading(true);
       const image = require(`../data/profiles/${randomItem(['profile_5.png', 'profile_6.jpeg'])}`);
       const body = {
-        userId: ORG_ID,
+        organizeId: ORG_ID,
         customerImage: image,
         firstName: randomItem(FIRST_NAMES),
         lastName: randomItem(LAST_NAMES),
@@ -26,17 +26,18 @@ const LoginPage = ({ history }) => {
         email: 'paiboon.tob@gmail.com',
         bookingStatus: 'booked',
         gender: randomItem(['Male', 'Female']),
-      }
+      };
       const { data: customerId } = await axios.post('http://localhost:3000/connectx/api/customer/addCustomer', body);
-      const { data: customer } = await axios.post('http://localhost:3000/connectx/api/customer/listdataprofile', { customerId });
+      const { data: customer } = await axios.post('http://localhost:3000/connectx/api/customer/listdataprofile', { customerId, organizeId: ORG_ID });
       const { data: { chatRoomId } } = await axios.post('http://localhost:3000/connectx/api/engagement/chatRoom', { customerId, organizeId: ORG_ID });
-      setCustomer({ ...customer, customerId })
-      setChatRoomId(chatRoomId)
+      setCustomer({ ...customer, customerId });
+      setChatRoomId(chatRoomId);
     } catch (error) {
       console.log(error);
     }
     setIsLoading(false)
   };
+
   return (
     <div>
       {

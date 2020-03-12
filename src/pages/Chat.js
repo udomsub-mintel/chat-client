@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Input, Avatar, Button } from 'antd';
 import axios from 'axios';
 import firestore from '../firestore/firestore';
@@ -6,19 +6,25 @@ import firestore from '../firestore/firestore';
 const Chat = ({ customer, ORG_ID, chatRoomId }) => {
   const [chats, setChats] = useState([]);
   const [inputText, setInputText] = useState('');
+  const messagesRef = useRef(null);
 
   useEffect(() => {
     setChats([]);
     if (chatRoomId) {
-      firestore.collection(`Organizes/${ORG_ID}/chatRooms/${chatRoomId}/chats`)
+      firestore.collection(`Organizes/${ORG_ID}/objects/chatRooms/data/${chatRoomId}/chats`)
         .orderBy('timestamp', 'asc')
         .onSnapshot((snapshot) => {
           const messages = [];
           snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() }));
           setChats([...messages]);
+          scrollToBottom();
         });
     }
   }, [ORG_ID, chatRoomId]);
+
+  const scrollToBottom = () => {
+    messagesRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const handlePostMessage = async (event) => {
     try {
@@ -51,6 +57,7 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
           messageType: 'response',
           message,
         },
+        organizeId: ORG_ID,
       });
       console.log(data);
     } catch (error) {
@@ -75,8 +82,8 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
 
   const getImage = (senderId) => {
     switch (senderId) {
-      case ORG_ID: return 'https://www.hoteljob.in.th/mm/9f8b2d231d36cf58903811aa08f635e220190930113721.png';
-      case 'bot': return 'https://www.hoteljob.in.th/mm/9f8b2d231d36cf58903811aa08f635e220190930113721.png';
+      case ORG_ID: return '/logo-krungsri.png';
+      case 'bot': return '/logo-krungsri.png';
       default: return customer.customerImage;
     }
   };
@@ -85,7 +92,7 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
     const image = getImage(chat.senderId);
     const isSender = chat.senderId === customer.customerId;
     const message = getMessageComponent(chat);
-    const time = new Date(chat.timestamp).toTimeString().substr(0, 5);
+    const time = chat.timestamp.toDate().toTimeString().substr(0, 5);
 
     return (
       <div key={chat.id} style={{
@@ -107,6 +114,7 @@ const Chat = ({ customer, ORG_ID, chatRoomId }) => {
     <div className="chat-container">
       <div className="chat-messages">
         {messages}
+        <div ref={messagesRef} />
       </div>
       <form className="chat-inputbox" onSubmit={handlePostMessage}>
         <Input placeholder="Typing here..." className="chat-input" value={inputText} onChange={(e) => setInputText(e.target.value)} />
