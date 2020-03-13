@@ -44,8 +44,8 @@ const LoginPage = ({ history }) => {
         chatRoomId ? <Chat customer={customer} ORG_ID={ORG_ID} chatRoomId={chatRoomId} /> : (
           <div className="login-page">
             <div className="container">
-              <img src="https://www.hoteljob.in.th/mm/9f8b2d231d36cf58903811aa08f635e220190930113721.png" alt="connectX" height="150px" />
-              <Button type="primary" className="login-button" style={{ marginTop: 40 }} onClick={createNewEngage} disabled={isLoading}>
+              <img src="/krungsri.png" alt="connectX" height="180px" />
+              <Button type="primary" className="login-button" style={{ marginTop: 50 }} onClick={createNewEngage} disabled={isLoading}>
                 {isLoading && <Icon type="loading" />}
                 <span>Start Chat</span>
                 <Icon type="arrow-right" />
